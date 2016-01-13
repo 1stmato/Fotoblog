@@ -1,6 +1,20 @@
 class Post < ActiveRecord::Base
   has_and_belongs_to_many :tags
   attr_accessor :tags_string
-  validates :author, :title, :body, presence: true
+  attr_accessor :body_file_name
+  attr_accessor :body_content_type
+  validates :author, :title, :description, presence: true
+
+  # rubocop:disable Metrics/LineLength
+  has_attached_file :photo, styles: { medium: '300x300>', thumb: '100x100>' }, default_url: '/images/:style/missing.png'
+  # rubocop:enable Metrics/LineLength
+
+
+  # rubocop:disable Style/RegexpLiteral
+  validates_attachment_content_type :photo, content_type: /\Aimage\/.*\Z/
+  # rubocop:enable Style/RegexpLiteral
+
+  validates :photo, attachment_presence: true
+
   validates :tags_string, presence: { message: 'must have at least one tag' }
 end

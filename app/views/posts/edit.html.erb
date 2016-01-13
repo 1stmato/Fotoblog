@@ -21,10 +21,16 @@
     <%= f.label :title %><br>
     <%= f.text_field :title %>
   </p>
- 
+
   <p>
-    <%= f.label :body %><br>
-    <%= f.text_area :body %>
+    <%= f.label :description %><br>
+    <%= f.text_area :description %>
+  </p>
+
+  <p>
+    <%= f.label :photo %><br>
+    <%= image_tag @post.photo.url(:thumb) %><br />
+    <%= f.file_field :photo %>
   </p>
 
   <p>

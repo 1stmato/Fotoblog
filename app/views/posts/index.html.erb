@@ -7,7 +7,8 @@
   <tr>
     <th>Author</th>
     <th>Title</th>
-    <th>Body</th>
+    <th>Description</th>
+    <th>Photo</th>
     <th>Tags</th>
   </tr>
 
@@ -15,7 +16,8 @@
     <tr id="post-row-<%= post.id %>">
       <td class="post-author"><%= post.author %></td>
       <td class="post-title"><%= post.title %></td>
-      <td class="post-body"><%= post.body %></td>
+      <td class="post-description"><%= post.description %></td>
+      <td class="post-body"><%= image_tag post.photo.url(:thumb) %></td>
       <td class="post-tags"><%= post.tags.map { |tag| tag.name}.join(', ') %></td>
       <td><%= link_to 'Edit', edit_post_path(post) %></td>
       <td><%= link_to 'Delete', post_path(post),
