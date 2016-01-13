@@ -1,0 +1,26 @@
+<%@tags.each do |tag| %>
+  <%= link_to tag.name, filter_path(tag.name), :class=> 'filter-by-tag'%>
+<% end %>
+<h1>Posts</h1>
+<%= link_to 'Create new post', new_post_path %>
+<table>
+  <tr>
+    <th>Author</th>
+    <th>Title</th>
+    <th>Body</th>
+    <th>Tags</th>
+  </tr>
+
+  <% @posts.each do |post| %>
+    <tr id="post-row-<%= post.id %>">
+      <td class="post-author"><%= post.author %></td>
+      <td class="post-title"><%= post.title %></td>
+      <td class="post-body"><%= post.body %></td>
+      <td class="post-tags"><%= post.tags.map { |tag| tag.name}.join(', ') %></td>
+      <td><%= link_to 'Edit', edit_post_path(post) %></td>
+      <td><%= link_to 'Delete', post_path(post),
+              method: :delete,
+              data: { confirm: 'Are you sure?' } %></td>
+    </tr>
+  <% end %>
+</table>
