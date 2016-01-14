@@ -3,7 +3,7 @@ class Post < ActiveRecord::Base
   attr_accessor :tags_string
   attr_accessor :body_file_name
   attr_accessor :body_content_type
-  validates :author, :title, :description, presence: true
+  validates :author, :title, :description, :comments, presence: true
 
   # rubocop:disable Metrics/LineLength
   has_attached_file :photo, styles: { medium: '300x300>', thumb: '100x100>' }, default_url: '/images/:style/missing.png'

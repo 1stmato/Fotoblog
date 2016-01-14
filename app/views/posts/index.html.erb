@@ -19,6 +19,7 @@
       <td class="post-description"><%= post.description %></td>
       <td class="post-body"><%= image_tag post.photo.url(:thumb) %></td>
       <td class="post-tags"><%= post.tags.map { |tag| tag.name}.join(', ') %></td>
+      <td class="post-description"><%= post.comments %></td>
       <td><%= link_to 'Edit', edit_post_path(post) %></td>
       <td><%= link_to 'Delete', post_path(post),
               method: :delete,

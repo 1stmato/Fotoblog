@@ -37,6 +37,11 @@
     <%= f.label :tags_string %><br>
     <%= f.text_field :tags_string, :value => @post.tags.map{|tag| tag.name}.join(', ')%>
   </p>
+
+  <p>
+    <%= f.label :comments %><br>
+    <%= f.select(:comments, options_for_select([['Always', 'Always'], ['After approval', 'Approval'], ['Not Allowed', 'Never']], :selected => @post.comments)) %>
+  </p>
  
   <p>
     <%= f.submit %>

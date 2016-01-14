@@ -78,7 +78,7 @@ class PostsController < ApplicationController
   private
 
   def post_params
-    params.require(:post).permit(:author, :title, :description, :photo, :tags_string)
+    params.require(:post).permit(:author, :title, :description, :photo, :tags_string, :comments)
   end
 
   def parse_tags(tags_string)
