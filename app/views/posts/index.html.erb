@@ -1,6 +1,7 @@
 <%@tags.each do |tag| %>
   <%= link_to tag.name, filter_path(tag.name), :class=> 'filter-by-tag'%>
 <% end %>
+<h5><%= current_user.email %></h5>
 <h1>Posts</h1>
 <%= link_to 'Create new post', new_post_path %>
 <table>
@@ -14,7 +15,7 @@
 
   <% @posts.each do |post| %>
     <tr id="post-row-<%= post.id %>">
-      <td class="post-author"><%= post.author %></td>
+      <td class="post-author"><%= post.user.email %></td>
       <td class="post-title"><%= post.title %></td>
       <td class="post-description"><%= post.description %></td>
       <td class="post-body"><%= image_tag post.photo.url(:thumb) %></td>

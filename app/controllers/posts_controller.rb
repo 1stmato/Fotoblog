@@ -1,4 +1,5 @@
 class PostsController < ApplicationController
+  before_filter :authenticate_user!
   def index
     @posts = Post.all.order('updated_at DESC')
     # rubocop:disable Metrics/LineLength
@@ -16,7 +17,7 @@ class PostsController < ApplicationController
 
   def create
     @post = Post.new(post_params)
-
+    @post.user = current_user
     if @post.save
       tags_string = (params['post']['tags_string']).to_s
       tags = parse_tags(tags_string)
@@ -78,7 +79,7 @@ class PostsController < ApplicationController
   private
 
   def post_params
-    params.require(:post).permit(:author, :title, :description, :photo, :tags_string, :comments)
+    params.require(:post).permit(:title, :description, :photo, :tags_string, :comments)
   end
 
   def parse_tags(tags_string)
