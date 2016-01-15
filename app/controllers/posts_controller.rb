@@ -1,5 +1,7 @@
 class PostsController < ApplicationController
   before_filter :authenticate_user!
+  load_and_authorize_resource
+  
   def index
     @posts = Post.all.order('updated_at DESC')
     # rubocop:disable Metrics/LineLength

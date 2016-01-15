@@ -2,6 +2,15 @@
   <%= link_to tag.name, filter_path(tag.name), :class=> 'filter-by-tag'%>
 <% end %>
 <h5><%= current_user.email %></h5>
+<% if user_signed_in? %>
+  <li>
+  <%= link_to('Logout', destroy_user_session_path, :method => :delete) %>        
+  </li>
+<% else %>
+  <li>
+  <%= link_to('Login', new_user_session_path)  %>  
+  </li>
+<% end %>
 <h1>Posts</h1>
 <%= link_to 'Create new post', new_post_path %>
 <table>
@@ -18,13 +27,14 @@
       <td class="post-author"><%= post.user.email %></td>
       <td class="post-title"><%= post.title %></td>
       <td class="post-description"><%= post.description %></td>
-      <td class="post-body"><%= image_tag post.photo.url(:thumb) %></td>
+      <td class="post-photo"><%= image_tag post.photo.url(:thumb) %></td>
       <td class="post-tags"><%= post.tags.map { |tag| tag.name}.join(', ') %></td>
-      <td class="post-description"><%= post.comments %></td>
-      <td><%= link_to 'Edit', edit_post_path(post) %></td>
-      <td><%= link_to 'Delete', post_path(post),
+      <td class="post-comments"><%= post.comments %></td>
+      <% if can? :update, post %><td><%= link_to 'Edit', edit_post_path(post) %></td><% end %>
+      <% if can? :delete, post %><td><%= link_to 'Delete', post_path(post),
               method: :delete,
-              data: { confirm: 'Are you sure?' } %></td>
+              data: { confirm: 'Are you sure?' } %></td><% end %>
+      <% if can? :read, post %><td><%= link_to 'Show', post_path(post) %></td><% end %>
     </tr>
   <% end %>
 </table>
