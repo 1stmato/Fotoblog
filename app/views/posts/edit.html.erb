@@ -13,33 +13,33 @@
     </div>
   <% end %>
 
-  <p>
+  <p class="form-group">
     <%= f.label :title %><br>
-    <%= f.text_field :title %>
+    <%= f.text_field :title, class:"form-control" %>
   </p>
 
-  <p>
+  <p class="form-group">
     <%= f.label :description %><br>
-    <%= f.text_area :description %>
+    <%= f.text_area :description, class:"form-control" %>
   </p>
 
-  <p>
+  <p  class="form-group">
     <%= f.label :photo %><br>
     <%= image_tag @post.photo.url(:thumb) %><br />
     <%= f.file_field :photo %>
   </p>
 
-  <p>
+  <p class="form-group">
     <%= f.label :tags_string %><br>
-    <%= f.text_field :tags_string, :value => @post.tags.map{|tag| tag.name}.join(', ')%>
+    <%= f.text_field :tags_string, :value => @post.tags.map{|tag| tag.name}.join(', '), class:"form-control"%>
   </p>
 
-  <p>
-    <%= f.label :comments %><br>
-    <%= f.select(:comments, options_for_select([['Always', 'Always'], ['After approval', 'Approval'], ['Not Allowed', 'Never']], :selected => @post.comments)) %>
+  <p class="form-group">
+    <%= f.label :allow_comments %><br>
+    <%= f.select(:allow_comments, options_for_select([['Always', 'Always'], ['After approval', 'Approval'], ['Not Allowed', 'Never']], :selected => @post.comments), {}, {:class=>'form-control'}) %>
   </p>
  
   <p>
-    <%= f.submit %>
+    <%= f.submit class:"btn btn-success"%>
   </p>
 <% end %>

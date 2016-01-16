@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160115110206) do
+ActiveRecord::Schema.define(version: 20160116161854) do
 
   create_table "average_caches", force: :cascade do |t|
     t.integer  "rater_id"
@@ -21,6 +21,23 @@ ActiveRecord::Schema.define(version: 20160115110206) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  create_table "comments", force: :cascade do |t|
+    t.text     "body"
+    t.boolean  "display",    null: false
+    t.boolean  "validated",  null: false
+    t.integer  "likes",      null: false
+    t.integer  "dislikes",   null: false
+    t.integer  "post_id"
+    t.integer  "user_id"
+    t.integer  "Comment_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  add_index "comments", ["Comment_id"], name: "index_comments_on_Comment_id"
+  add_index "comments", ["post_id"], name: "index_comments_on_post_id"
+  add_index "comments", ["user_id"], name: "index_comments_on_user_id"
 
   create_table "overall_averages", force: :cascade do |t|
     t.integer  "rateable_id"
@@ -39,7 +56,7 @@ ActiveRecord::Schema.define(version: 20160115110206) do
     t.string   "photo_content_type"
     t.integer  "photo_file_size"
     t.datetime "photo_updated_at"
-    t.string   "comments"
+    t.string   "allow_comments"
     t.string   "user_id"
   end
 

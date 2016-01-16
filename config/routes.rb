@@ -4,7 +4,9 @@ Rails.application.routes.draw do
   #get 'welcome/index'
   root 'posts#index'
 
-  resources :posts
+  resources :posts do
+    resources :comments
+  end
 
   get 'posts/filter/:tag_name' => 'posts#filter', as: 'filter'
   # The priority is based upon order of creation: first created -> highest priority.

@@ -13,7 +13,7 @@
 <% end %>
 <h1>Posts</h1>
 <%= link_to 'Create new post', new_post_path %>
-<table>
+<table class="table">
   <tr>
     <th>Author</th>
     <th>Title</th>
@@ -29,7 +29,7 @@
       <td class="post-description"><%= post.description %></td>
       <td class="post-photo"><%= image_tag post.photo.url(:thumb) %></td>
       <td class="post-tags"><%= post.tags.map { |tag| tag.name}.join(', ') %></td>
-      <td class="post-comments"><%= post.comments %></td>
+      <td class="post-comments"><%= post.allow_comments %></td>
       <% if can? :update, post %><td><%= link_to 'Edit', edit_post_path(post) %></td><% end %>
       <% if can? :delete, post %><td><%= link_to 'Delete', post_path(post),
               method: :delete,

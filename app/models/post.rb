@@ -2,10 +2,11 @@ class Post < ActiveRecord::Base
   ratyrate_rateable
   has_and_belongs_to_many :tags
   belongs_to :user
+  has_many :comments
   attr_accessor :tags_string
   attr_accessor :body_file_name
   attr_accessor :body_content_type
-  validates :title, :description, :comments, presence: true
+  validates :title, :description, :allow_comments, presence: true
 
   # rubocop:disable Metrics/LineLength
   has_attached_file :photo, styles: { medium: '800x600>', thumb: '100x100>' }, default_url: '/images/:style/missing.png'
