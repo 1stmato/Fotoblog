@@ -42,7 +42,7 @@
 <hr>
 <h3>Comments</h3>
 
-<% @post.comments.each do |comment| %>
+<% @post.comments.select{ |comment| comment.id.present? }.each do |comment| %>
 
     <%=  link_to 'Destroy', [comment.post, comment],
                      method: :delete,
