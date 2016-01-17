@@ -16,13 +16,15 @@ end
 
   private
   def comment_params
-    params.require(:comment).permit(:body)
+    params.permit(:body, :parent)
   end
 
   private
   def setup_comment()
     comment = Comment.new
-    #comment.comment = null
+    if comment_params.has_key?(:parent)
+      comment.Comment = Comment.find(comment_params[:parent])
+    end
     comment.user = current_user
     @post.allow_comments == "Always" ? comment.display = true : comment.display = false
     comment.validated = false
