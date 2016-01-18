@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160117163453) do
+ActiveRecord::Schema.define(version: 20160118123713) do
 
   create_table "average_caches", force: :cascade do |t|
     t.integer  "rater_id"
@@ -26,8 +26,8 @@ ActiveRecord::Schema.define(version: 20160117163453) do
     t.text     "body"
     t.boolean  "display",    null: false
     t.boolean  "validated",  null: false
-    t.integer  "likes",      null: false
-    t.integer  "dislikes",   null: false
+    t.integer  "ups",        null: false
+    t.integer  "downs",      null: false
     t.integer  "post_id"
     t.integer  "user_id"
     t.integer  "Comment_id"
@@ -40,6 +40,18 @@ ActiveRecord::Schema.define(version: 20160117163453) do
   add_index "comments", ["ancestry"], name: "index_comments_on_ancestry"
   add_index "comments", ["post_id"], name: "index_comments_on_post_id"
   add_index "comments", ["user_id"], name: "index_comments_on_user_id"
+
+  create_table "likes", force: :cascade do |t|
+    t.integer  "up"
+    t.integer  "down"
+    t.integer  "comment_id"
+    t.integer  "user_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  add_index "likes", ["comment_id"], name: "index_likes_on_comment_id"
+  add_index "likes", ["user_id"], name: "index_likes_on_user_id"
 
   create_table "overall_averages", force: :cascade do |t|
     t.integer  "rateable_id"

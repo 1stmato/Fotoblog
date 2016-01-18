@@ -1,3 +1,4 @@
+<%# if comment.display == true %>
 <article class="row">
   <div class="col-md-2 col-sm-2 hidden-xs">
     <figure class="thumbnail">
@@ -8,13 +9,32 @@
   <div class="col-md-10 col-sm-10">
     <div class="panel panel-default arrow left">
       <div class="panel-body">
+        <% if @post.allow_comments == "Approval" %>
+            <%	if comment.validated == false %>
+                <p><i class="fa fa-gavel"></i> Not validated ! </i><%= link_to "ok", post_path+"/comments/#{comment.id}/toggle_visible", class:"btn btn-success" %></p>
+            <% end %>
+
+            <%	if comment.validated == true %>
+                <p><i class="fa fa-gavel"></i> Validated </i><%= link_to "undo", post_path+"/comments/#{comment.id}/toggle_visible", class:"btn btn-success" %></p>
+            <% end %>
+
+            <% if comment.display == true %>
+                <p class="text-left"><i class="fa fa-eye"> Visible</i></p>
+            <% else %>
+                <p class="text-left"><i class="fa fa-eye-slash"> Not-visible</i></p>
+            <% end %>
+
+        <% end %>
         <header class="text-left">
           <div class="comment-user"><i class="fa fa-user"></i> <%= comment.user.try(:email) %> </div>
           <time class="comment-date" datetime="<%= comment.created_at %>">
             <i class="fa fa-clock-o"></i><%= comment.created_at %></time>
         </header>
         <div class="comment-post">
-
+          <p class="text-left">
+            <i class='fa fa-arrow-up'></i><%= link_to "(#{comment.ups})", post_path+"/comments/#{comment.id}/like"%>
+            <i class='fa fa-arrow-down'></i><%= link_to "(#{comment.downs})", post_path+"/comments/#{comment.id}/dislike"%>
+          </p>
           <p>
             <%= comment.body %>
           </p>
@@ -30,16 +50,19 @@
 
         <hr>
         <div id="<%= "hide#{comment.id}" %>" class="collapse">
-            <%= form_tag( "/posts/#{comment.post.id}/comments", method: "post") do %>
-                    <p class="form-group">
-                      <%= label_tag(:body, "Body") %><br>
-                      <%= text_area_tag 'body', nil, class: "form-control" %>
-                    </p>
 
-                    <input type="hidden" name="parent_id" value="<%= comment.id %>" />
+          <%= form_for([@post, @post.comments.build]) do |f| %>
 
-                    <%= submit_tag("Respond" ,{class: "btn btn-success"}) %>
-            <% end %>
+              <p class="form-group">
+                <%= f.label :body %><br>
+                <%= f.text_area :body, class: "form-control" %>
+              </p>
+              <input type="hidden" name="parent_id" value="<%= comment.id %>" />
+              <p class="form-group">
+                <%= f.submit value:"Respond", class: "btn btn-success" %>
+              </p>
+          <% end %>
+
         </div>
 
       </div>

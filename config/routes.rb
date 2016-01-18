@@ -5,7 +5,11 @@ Rails.application.routes.draw do
   root 'posts#index'
 
   resources :posts do
-    resources :comments
+    resources :comments do
+      get "like"
+      get "dislike"
+      get "toggle_visible"
+    end
   end
 
   get 'posts/filter/:tag_name' => 'posts#filter', as: 'filter'
