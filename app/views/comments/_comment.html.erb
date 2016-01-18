@@ -9,6 +9,7 @@
   <div class="col-md-10 col-sm-10">
     <div class="panel panel-default arrow left">
       <div class="panel-body">
+        <% if can? :manage, comment %>
         <% if @post.allow_comments == "Approval" %>
             <%	if comment.validated == false %>
                 <p><i class="fa fa-gavel"></i> Not validated ! </i><%= link_to "ok", post_path+"/comments/#{comment.id}/toggle_visible", class:"btn btn-success" %></p>
@@ -23,7 +24,7 @@
             <% else %>
                 <p class="text-left"><i class="fa fa-eye-slash"> Not-visible</i></p>
             <% end %>
-
+        <% end %>
         <% end %>
         <header class="text-left">
           <div class="comment-user"><i class="fa fa-user"></i> <%= comment.user.try(:email) %> </div>
@@ -40,9 +41,11 @@
           </p>
         </div>
         <p class="text-right">
+          <% if can? :manage, comment %>
           <%= link_to 'Destroy', [comment.post, comment],
                       method: :delete,
                       data: {confirm: 'Are you sure?'}, class: "btn btn-danger" %>
+          <% end %>
           <button type="button" class="btn btn-default btn-sm" data-toggle="collapse" data-target="#<%= "hide#{comment.id}" %>">
             <i class="fa fa-reply"></i> Replay
           </button>
