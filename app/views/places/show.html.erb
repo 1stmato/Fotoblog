@@ -1,0 +1,14 @@
+<h1>New Post</h1>
+<%= form_for :place, url:places_path do |f| %>
+
+<%= f.text_field :search%>
+<%= f.submit %>
+<% end %>
+<% if @places.present? %>
+  <% @places.each do |place| %>
+    <%= place[1].to_json%>
+  <% end %>
+<% else %>
+  <p>There are no posts containing the term(s) <%= params[:search] %>.</p>
+<% end %>
+
