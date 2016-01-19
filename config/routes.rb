@@ -13,6 +13,10 @@ Rails.application.routes.draw do
   end
 
   resources :places
+  
+  get 'places/search/:name/:city' => 'places#search', :as => 'places_search'
+
+
   get 'posts/filter/:tag_name' => 'posts#filter', as: 'filter'
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

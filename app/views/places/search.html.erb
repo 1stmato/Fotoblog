@@ -1,12 +1,13 @@
 <h1>New Post</h1>
 <%= form_for :place, url:places_path do |f| %>
 
-<%= f.text_field :search%>
+<%= f.text_field :search %>
 <%= f.submit %>
 <% end %>
 <% if @places.present? %>
   <% @places.each do |place| %>
-      <%= place %><br />
+    <% JSON.parse(place[1].to_json).each do |p| %>
+      <%= p['name'] unless p.is_a?(Array)%><br />
     <% end %>
   <% end %>
 <% else %>
