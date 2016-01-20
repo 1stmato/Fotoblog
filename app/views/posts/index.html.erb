@@ -1,18 +1,18 @@
 <%@tags.each do |tag| %>
   <%= link_to tag.name, filter_path(tag.name), :class=> 'filter-by-tag'%>
 <% end %>
-<h5><%= current_user.email %></h5>
-<% if user_signed_in? %>
-  <li>
-  <%= link_to('Logout', destroy_user_session_path, :method => :delete) %>        
-  </li>
-<% else %>
-  <li>
-  <%= link_to('Login', new_user_session_path)  %>  
-  </li>
-<% end %>
+
 <h1>Posts</h1>
-<%= link_to 'Create new post', new_post_path %>
+<%= link_to 'Create new post', new_post_path, class: 'btn btn-success' %>
+</br>
+</br>
+</br>
+<div class="row">
+
+  <div class="col-lg-12">
+    <h1 class="page-header">Thumbnail Gallery</h1>
+  </div>
+
 <table class="table">
   <tr>
     <th>Author</th>
@@ -24,7 +24,7 @@
 
   <% @posts.each do |post| %>
     <tr id="post-row-<%= post.id %>">
-      <td class="post-author"><%= post.user.email %></td>
+      <td class="post-author"><%= image_tag post.user.avatar.url(:thumb) %> <p><%= post.user.email %></p></td>
       <td class="post-title"><%= post.title %></td>
       <td class="post-description"><%= post.description %></td>
       <td class="post-photo"><%= image_tag post.photo.url(:thumb) %></td>
@@ -38,3 +38,4 @@
     </tr>
   <% end %>
 </table>
+</div>

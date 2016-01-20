@@ -1,8 +1,8 @@
-<%# if comment.display == true %>
+<% if comment.validated == true || (can? :manage, @post)  %>
 <article class="row">
   <div class="col-md-2 col-sm-2 hidden-xs">
     <figure class="thumbnail">
-      <img class="img-responsive" src="http://www.keita-gaming.com/assets/profile/default-avatar-c5d8ec086224cb6fc4e395f4ba3018c2.jpg"/>
+      <%= image_tag comment.user.avatar.url(:thumb) %>
       <figcaption class="text-center"><%= comment.user.try(:email) %></figcaption>
     </figure>
   </div>
@@ -10,19 +10,21 @@
     <div class="panel panel-default arrow left">
       <div class="panel-body">
         <% if can? :manage, comment %>
+
+            <% if comment.display == true %>
+                <p class="text-left"><i class="fa fa-eye"> Visible</i> <%= link_to "hide", post_path+"/comments/#{comment.id}/toggle_visible", class:"btn btn-success" %></p>
+            <% else %>
+                <p class="text-left"><i class="fa fa-eye-slash"> Not-visible</i> <%= link_to "show", post_path+"/comments/#{comment.id}/toggle_visible", class:"btn btn-success" %></p>
+
+            <% end %>
+
         <% if @post.allow_comments == "Approval" %>
             <%	if comment.validated == false %>
-                <p><i class="fa fa-gavel"></i> Not validated ! </i><%= link_to "ok", post_path+"/comments/#{comment.id}/toggle_visible", class:"btn btn-success" %></p>
+                <p><i class="fa fa-gavel"></i> Not validated ! </i><%= link_to "ok", post_path+"/comments/#{comment.id}/toggle_valid", class:"btn btn-success" %></p>
             <% end %>
 
             <%	if comment.validated == true %>
-                <p><i class="fa fa-gavel"></i> Validated </i><%= link_to "undo", post_path+"/comments/#{comment.id}/toggle_visible", class:"btn btn-success" %></p>
-            <% end %>
-
-            <% if comment.display == true %>
-                <p class="text-left"><i class="fa fa-eye"> Visible</i></p>
-            <% else %>
-                <p class="text-left"><i class="fa fa-eye-slash"> Not-visible</i></p>
+                <p><i class="fa fa-gavel"></i> Validated </i><%= link_to "undo", post_path+"/comments/#{comment.id}/toggle_valid", class:"btn btn-success" %></p>
             <% end %>
         <% end %>
         <% end %>
@@ -37,7 +39,11 @@
             <i class='fa fa-arrow-down'></i><%= link_to "(#{comment.downs})", post_path+"/comments/#{comment.id}/dislike"%>
           </p>
           <p>
-            <%= comment.body %>
+            <% if comment.display == true %>
+                <%= comment.body %>
+            <% else %>
+                <p>Content hidden...</p>
+            <% end %>
           </p>
         </div>
         <p class="text-right">
@@ -72,3 +78,4 @@
     </div>
   </div>
 </article>
+<% end %>

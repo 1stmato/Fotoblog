@@ -5,12 +5,16 @@ class Ability
     user ||= User.new
     if user.admin
       can :manage, :all
-    end
-    can :read, Post
-    can :manage, Post, user: user
-    #can :manage, Comment, user: user
-    can :manage, Comment do |comment|
-      comment.post.user == user
+    else
+      can :read, Post
+      can :manage, Post, user: user
+      can :create, Comment
+      #can :manage, Comment, user: user
+      can :manage, Comment do |comment|
+          comment.post.user == user
+      end
+      can :read, User
+      can :create, Comment
     end
     # Define abilities for the passed in user here. For example:
     #

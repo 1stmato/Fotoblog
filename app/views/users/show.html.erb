@@ -1,0 +1,41 @@
+<!-- Page Content -->
+<div class="container">
+
+  <div class="row">
+
+    <div class="col-lg-12">
+      <h1 class="page-header">Users photos</h1>
+      <% @posts.each do |post| %>
+          <div class="col-lg-3 col-md-4 col-xs-6 thumb">
+
+            <div class="thumbnail">
+              <h4><%= post.title %></h4>
+              <%= link_to (image_tag post.photo.url(:thumb)), post_path(post) %>
+              <p><%= post.description %></p>
+              <div><% if can? :update, post %><%= link_to 'Edit', edit_post_path(post) %><% end %></div>
+              <div><% if can? :delete, post %><%= link_to 'Delete', post_path(post),
+                                                          method: :delete,
+                                                          data: { confirm: 'Are you sure?' } %><% end %>
+              </div>
+            </div>
+          </div>
+
+      <% end %>
+    </div>
+
+    <div class="col-lg-12">
+      <h1 class="page-header">Users favorits</h1>
+      <% @rating.each do |post| %>
+          <div class="col-lg-3 col-md-4 col-xs-6 thumb">
+            <div class="thumbnail">
+              <h4><%= post['title'] %></h4>
+              <%= link_to (image_tag Post.find(post['id']).photo.url(:thumb)), post_path(post['id']) %>
+              <p><%= post['description'] %></p>
+              <p>Rating: <%= post['stars'] %></p>
+              </div>
+            </div>
+      <% end %>
+    </div>
+
+  </div>
+</div>

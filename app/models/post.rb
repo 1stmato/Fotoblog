@@ -20,4 +20,5 @@ class Post < ActiveRecord::Base
   validates :photo, attachment_presence: true
 
   validates :tags_string, presence: { message: 'must have at least one tag' }
+
 end

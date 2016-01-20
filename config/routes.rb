@@ -4,11 +4,16 @@ Rails.application.routes.draw do
   #get 'welcome/index'
   root 'posts#index'
 
+  resources :users do
+    get "show"
+  end
+
   resources :posts do
     resources :comments do
       get "like"
       get "dislike"
       get "toggle_visible"
+      get "toggle_valid"
     end
   end
 

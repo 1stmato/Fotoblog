@@ -1,5 +1,9 @@
 class CommentsController < ApplicationController
+
+  load_and_authorize_resource
   # sqlite3 db/development.sqlite3
+
+
   def create
     @post = Post.find(params[:post_id])
     #render plain: params.inspect
@@ -37,17 +41,21 @@ class CommentsController < ApplicationController
       comment = Comment.find(params[:comment_id])
       like.comment = comment
       like.user = current_user
-      like.up = -1
+      like.down = 1
       like.save
       # add to comment likes
-      comment.decrement!(:ups, 1)
+      comment.decrement!(:downs, 1)
     end
     redirect_to post_path(@post)
   end
 
   def toggle_visible
-    Comment.toggle_display_with_children(params[:comment_id])
+    Comment.toggle_visible(params[:comment_id])
+    redirect_to post_path(Post.find(params[:post_id]))
+  end
 
+  def toggle_valid
+    Comment.toggle_valid_with_children(params[:comment_id])
     redirect_to post_path(Post.find(params[:post_id]))
   end
 

@@ -119,3 +119,7 @@
 .nested_comments .nested_comments .nested_comments .nested_comments .nested_comments {
     margin-left: 0;
 }
+
+.sep{
+    height: 15px;
+}
