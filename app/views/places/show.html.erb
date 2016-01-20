@@ -1,0 +1,9 @@
+<h1>Search place</h1>
+
+<%= form_for :place, url:places_search_path, method: 'get' do |f| %>
+  <%= f.text_field :name %>
+  <%= f.text_field :city %><br />
+  <%= f.submit %>
+  <%= f.label :venue %><br>
+  <%= f.select(:venue, options_for_select(@places)) unless @places.nil? %>
+<% end %>

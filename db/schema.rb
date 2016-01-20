@@ -61,6 +61,15 @@ ActiveRecord::Schema.define(version: 20160120114922) do
     t.datetime "updated_at"
   end
 
+  create_table "places", force: :cascade do |t|
+    t.string   "f_id"
+    t.string   "name"
+    t.string   "lat"
+    t.string   "lon"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "posts", force: :cascade do |t|
     t.string   "title"
     t.datetime "created_at",         null: false
