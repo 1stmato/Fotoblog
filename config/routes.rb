@@ -14,7 +14,7 @@ Rails.application.routes.draw do
 
   resources :places
   
-  get 'places/search/:name/:city' => 'places#search', :as => 'places_search'
+  get 'places_search' => 'places#search', :as => 'places_search'
 
 
   get 'posts/filter/:tag_name' => 'posts#filter', as: 'filter'
