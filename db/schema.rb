@@ -11,7 +11,15 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160120114922) do
+ActiveRecord::Schema.define(version: 20160122100835) do
+
+  create_table "albums", force: :cascade do |t|
+    t.string   "title"
+    t.text     "description"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+    t.string   "user_id"
+  end
 
   create_table "average_caches", force: :cascade do |t|
     t.integer  "rater_id"
@@ -81,6 +89,7 @@ ActiveRecord::Schema.define(version: 20160120114922) do
     t.datetime "photo_updated_at"
     t.string   "allow_comments"
     t.string   "user_id"
+    t.string   "album_id"
   end
 
   create_table "posts_tags", id: false, force: :cascade do |t|

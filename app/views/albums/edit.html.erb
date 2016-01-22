@@ -1,0 +1,29 @@
+<h1>Edit Post</h1>
+<%= form_for :album, url: album_path(@album), method: :patch do |f| %>
+  <% if @album.errors.any? %>
+    <div id="error_explanation">
+      <h2>
+        <%= pluralize(@album.errors.count, 'error') %> prohibited this post from being saved:
+      </h2>
+      <ul>
+        <% @album.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <p class="form-group">
+    <%= f.label :title %><br>
+    <%= f.text_field :title, class:"form-control" %>
+  </p>
+
+  <p class="form-group">
+    <%= f.label :description %><br>
+    <%= f.text_area :description, class:"form-control" %>
+  </p>
+ 
+  <p>
+    <%= f.submit class:"btn btn-success"%>
+  </p>
+<% end %>

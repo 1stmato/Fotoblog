@@ -11,19 +11,30 @@ class PostsController < ApplicationController
 
   def new
     @post = Post.new
+    @albums = Album.all
   end
 
   def edit
     @post = Post.find(params[:id])
+    @albums = Album.all
   end
 
   def create
     @post = Post.new(post_params)
     @post.user = current_user
+    @albums = Album.all
     if @post.save
       tags_string = (params['post']['tags_string']).to_s
       tags = parse_tags(tags_string)
       @post.update_attributes(tags: tags)
+      if(post_params['album_name'] == '-1')
+        @album = Album.new
+        @album.update_attributes(:title => 'Default', :description => 'Default album for unsorted photos', :user_id => current_user.id)
+        @album.save
+        @post.update_attributes(album_id: @album.id)
+      else
+        @post.update_attributes(album_id: post_params['album_name'])
+      end
       redirect_to '/'
     else
       render 'new'
@@ -44,6 +55,7 @@ class PostsController < ApplicationController
       updated_tags = deleted_tags | tags_string.split(/[\s,]+/) - old_tags.split(/[\s,]+/)
       @post.touch unless updated_tags.blank?
       deleted_tags.each { |tag| Tag.destroy_all('name' => tag) if Post.joins(:tags).where('tags.name' => tag).empty? }
+      @post.update_attributes(album_id: post_params['album_name'])
       redirect_to '/'
     else
       render 'edit'
@@ -81,7 +93,7 @@ class PostsController < ApplicationController
   private
 
   def post_params
-    params.require(:post).permit(:title, :description, :photo, :tags_string, :allow_comments)
+    params.require(:post).permit(:title, :description, :photo, :tags_string, :allow_comments, :album_name)
   end
 
   def parse_tags(tags_string)

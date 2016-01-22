@@ -32,7 +32,11 @@
     <%= f.label :tags_string %><br>
     <%= f.text_field :tags_string %>
   </p>
-
+  
+  <p>
+    <%= f.label :album %><br>
+    <%= f.select(:album_name, options_for_select(@albums.present? ? @albums.map {|album| [album.title, album.id]} :[['Default', '-1']])) %>
+  </p>
 
   <p>
     <%= f.label :allow_comments %><br>

@@ -8,6 +8,8 @@ class Ability
     else
       can :read, Post
       can :manage, Post, user: user
+      can :read, Album
+      can :manage, Album, user: user
       can :create, Comment
       #can :manage, Comment, user: user
       can :manage, Comment do |comment|

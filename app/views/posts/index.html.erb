@@ -19,6 +19,7 @@
     <th>Title</th>
     <th>Description</th>
     <th>Photo</th>
+    <th>Album</th>
     <th>Tags</th>
   </tr>
 
@@ -28,6 +29,7 @@
       <td class="post-title"><%= post.title %></td>
       <td class="post-description"><%= post.description %></td>
       <td class="post-photo"><%= image_tag post.photo.url(:thumb) %></td>
+      <td class="post-title"><%= post.album.title unless post.album.nil? %></td>
       <td class="post-tags"><%= post.tags.map { |tag| tag.name}.join(', ') %></td>
       <td class="post-comments"><%= post.allow_comments %></td>
       <% if can? :update, post %><td><%= link_to 'Edit', edit_post_path(post) %></td><% end %>

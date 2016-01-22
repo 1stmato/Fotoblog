@@ -19,6 +19,8 @@ Rails.application.routes.draw do
 
   resources :places
   
+  resources :albums
+
   get 'places_search' => 'places#search', :as => 'places_search'
 
 
