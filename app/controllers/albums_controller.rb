@@ -39,6 +39,22 @@ class AlbumsController < ApplicationController
     redirect_to '/albums'
   end
 
+  def posts_list
+    @posts = Post.where(user_id: current_user.id).order('updated_at DESC')
+    @album = Album.find(params[:album_id])
+  end
+
+  def add_post
+    @album = Album.find(params[:album_id])
+    params['album']['post_ids'].each do |post_id|
+      p = Post.update(post_id, album_id: params[:album_id])
+      puts post_id
+      puts params[:album_id]
+      puts p.album_id
+    end
+    redirect_to '/albums/' + params[:album_id]
+  end
+
   private
 
   def album_params

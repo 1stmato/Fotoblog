@@ -13,12 +13,15 @@
   <tr>
     <th>Title</th>
     <th>Description</th>
+    <th>Photos</th>
   </tr>
 
   <% @albums.each do |album| %>
     <tr id="album-row-<%= album.id %>">
       <td class="album-title"><%= album.title %></td>
       <td class="album-description"><%= album.description %></td>
+      <td class="album-posts"><%= album.posts.size %></td>
+      <td><%= link_to 'Add photos', album_posts_list_path(album) %></td>
       <% if can? :update, album %><td><%= link_to 'Edit', edit_album_path(album) %></td><% end %>
       <% if can? :delete, album %><td><%= link_to 'Delete', album_path(album),
               method: :delete,

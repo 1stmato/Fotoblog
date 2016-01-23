@@ -1,8 +1,4 @@
-class CommentsController < ApplicationController
-
-  load_and_authorize_resource
-  # sqlite3 db/development.sqlite3
-
+  class CommentsController < ApplicationController
 
   def create
     @post = Post.find(params[:post_id])
@@ -10,53 +6,13 @@ class CommentsController < ApplicationController
 
     setup_comment.save
     redirect_to post_path(@post)
-  end
+end
 
   def destroy
     @post = Post.find(params[:post_id])
     @comment = @post.comments.find(params[:id])
     @comment.destroy
     redirect_to post_path(@post)
-  end
-
-  def like
-    @post = Post.find(params[:post_id])
-    if Like.where(comment_id: params[:comment_id]).count == 0
-      like = Like.new
-      comment = Comment.find(params[:comment_id])
-      like.comment = comment
-      like.user = current_user
-      like.up = 1
-      like.save
-      # add to comment likes
-      comment.increment!(:ups, 1)
-    end
-    redirect_to post_path(@post)
-  end
-
-  def dislike
-    @post = Post.find(params[:post_id])
-    if Like.where(comment_id: params[:comment_id]).count == 0
-      like = Like.new
-      comment = Comment.find(params[:comment_id])
-      like.comment = comment
-      like.user = current_user
-      like.down = 1
-      like.save
-      # add to comment likes
-      comment.decrement!(:downs, 1)
-    end
-    redirect_to post_path(@post)
-  end
-
-  def toggle_visible
-    Comment.toggle_visible(params[:comment_id])
-    redirect_to post_path(Post.find(params[:post_id]))
-  end
-
-  def toggle_valid
-    Comment.toggle_valid_with_children(params[:comment_id])
-    redirect_to post_path(Post.find(params[:post_id]))
   end
 
   private
@@ -73,9 +29,9 @@ class CommentsController < ApplicationController
     comment.user = current_user
     @post.allow_comments == "Always" ? comment.display = true : comment.display = false
     comment.validated = false
-    comment.ups = 0
-    comment.downs = 0
-    comment.body = comment_params[:body]
+    comment.likes = 0
+    comment.dislikes = 0
+    comment.body = params[:body]
     comment.post = @post
     return comment
   end
