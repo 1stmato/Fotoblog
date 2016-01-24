@@ -1,4 +1,5 @@
-<% if comment.validated == true || (can? :manage, @post)  %>
+
+<% if (@post.allow_comments == "Approval"  && comment.validated == true) || (can? :manage, @post) || @post.allow_comments == "Always" %>
 <article class="row">
   <div class="col-md-2 col-sm-2 hidden-xs">
     <figure class="thumbnail">

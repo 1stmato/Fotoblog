@@ -21,7 +21,7 @@ class CommentsController < ApplicationController
 
   def like
     @post = Post.find(params[:post_id])
-    if Like.where(comment_id: params[:comment_id]).count == 0
+    if Like.where(comment_id: params[:comment_id]).where(user_id: current_user).count == 0
       like = Like.new
       comment = Comment.find(params[:comment_id])
       like.comment = comment
@@ -36,7 +36,7 @@ class CommentsController < ApplicationController
 
   def dislike
     @post = Post.find(params[:post_id])
-    if Like.where(comment_id: params[:comment_id]).count == 0
+    if Like.where(comment_id: params[:comment_id]).where(user_id: current_user).count == 0
       like = Like.new
       comment = Comment.find(params[:comment_id])
       like.comment = comment
