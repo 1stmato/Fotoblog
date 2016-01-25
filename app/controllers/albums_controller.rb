@@ -43,11 +43,12 @@ class AlbumsController < ApplicationController
     @album = Album.find(params[:id])
     @posts = Post.where(user_id: current_user.id).where.not(album_id: @album.id).order('updated_at DESC') if request.get?
     if request.patch?
+      #@album.update_attributes(post_ids: album_params['post_ids']) 
       #@album.update album_params
       #@album.save
       album_params['post_ids'].each do |post_id|
-        #Post.update(post_id, album_id: @album.id)
-        @album.posts << Post.find(post_id)
+        Post.find(post_id).update_attribute('album_id', @album.id)
+        #@album.posts << Post.find(post_id) (validate: false) 
       end
       redirect_to '/albums/' + params[:id]
     end
