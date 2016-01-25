@@ -1,0 +1,37 @@
+<h1>Posts</h1>
+</br>
+</br>
+</br>
+<div class="row">
+
+  <div class="col-lg-12">
+    <h1 class="page-header">Thumbnail Gallery</h1>
+  </div>
+
+<table class="table">
+  <tr>
+    <th>Author</th>
+    <th>Title</th>
+    <th>Description</th>
+    <th>Photo</th>
+    <th>Album</th>
+    <th>Tags</th>
+  </tr>
+<%= form_for :album, url: posts_album_path(@album), method: :patch do |f| %>
+  <%= hidden_field_tag "album[post_ids][]", '-1' %>
+  <% @posts.each do |post| %>
+    <tr id="post-row-<%= post.id %>">
+      <td class="post-author"><%= image_tag post.user.avatar.url(:thumb) %> <p><%= post.user.email %></p></td>
+      <td class="post-title"><%= post.title %></td>
+      <td class="post-description"><%= post.description %></td>
+      <td class="post-photo"><%= image_tag post.photo.url(:thumb) %></td>
+      <td class="post-title"><%= link_to post.album.title, album_path(post.album) unless post.album.nil? %></td>
+      <td class="post-tags"><%= post.tags.map { |tag| tag.name}.join(', ') %></td>
+      <td class="post-comments"><%= post.allow_comments %></td>
+      <td><%= check_box_tag :post_ids, post.id, @album.posts.include?(post), :name => 'album[post_ids][]' %></td>
+<% end %>
+    <%= f.submit class:"btn btn-success"%>
+    </tr>
+  <% end %>
+</table>
+</div>
