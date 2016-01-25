@@ -39,25 +39,24 @@ class AlbumsController < ApplicationController
     redirect_to '/albums'
   end
 
-  def posts_list
-    @posts = Post.where(user_id: current_user.id).order('updated_at DESC')
-    @album = Album.find(params[:album_id])
-  end
-
-  def add_post
-    @album = Album.find(params[:album_id])
-    params['album']['post_ids'].each do |post_id|
-      p = Post.update(post_id, album_id: params[:album_id])
-      puts post_id
-      puts params[:album_id]
-      puts p.album_id
+  def posts
+    @album = Album.find(params[:id])
+    @posts = Post.where(user_id: current_user.id).where.not(album_id: @album.id).order('updated_at DESC') if request.get?
+    if request.patch?
+      #@album.update album_params
+      #@album.save
+      album_params['post_ids'].each do |post_id|
+        #Post.update(post_id, album_id: @album.id)
+        @album.posts << Post.find(post_id)
+      end
+      redirect_to '/albums/' + params[:id]
     end
-    redirect_to '/albums/' + params[:album_id]
+
   end
 
   private
 
   def album_params
-    params.require(:album).permit(:title, :description)
+    params.require(:album).permit(:title, :description, post_ids: [])
   end
 end

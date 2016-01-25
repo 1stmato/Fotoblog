@@ -20,8 +20,8 @@ Rails.application.routes.draw do
   resources :places
   
   resources :albums do
-    get 'posts_list', :as => 'posts_list'
-    patch 'add_post'
+    match :posts, via: [:get, :patch], on: :member#get 'posts_list', :as => 'posts_list'
+    #patch 'add_post'
   end
   get 'places_search' => 'places#search', :as => 'places_search'
 
