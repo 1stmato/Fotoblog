@@ -43,10 +43,11 @@ class AlbumsController < ApplicationController
     @album = Album.find(params[:id])
     @posts = Post.where(user_id: current_user.id).where.not(album_id: @album.id).order('updated_at DESC') if request.get?
     if request.patch?
+      #params['album']['post_ids'] = [-1] if album_params['post_ids'].nil?
       #@album.update_attributes(post_ids: album_params['post_ids']) 
       #@album.update album_params
       #@album.save
-      album_params['post_ids'].each do |post_id|
+      album_params['post_ids'].select { |id| id != '-1' }.each do |post_id|
         Post.find(post_id).update_attribute('album_id', @album.id)
         #@album.posts << Post.find(post_id) (validate: false) 
       end
