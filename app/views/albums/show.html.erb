@@ -1,6 +1,7 @@
 <p>
 <%= image_tag @album.user.avatar.url(:thumb) %> <p><%= @album.user.email %></p></td>
 </p>
+<%= link_to 'My albums', albums_path, class: 'btn btn-success' %>
 
 <p>
   <strong>Title:</strong>

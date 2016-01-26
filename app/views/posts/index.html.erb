@@ -25,7 +25,7 @@
 
   <% @posts.each do |post| %>
     <tr id="post-row-<%= post.id %>">
-      <td class="post-author"><%= image_tag post.user.avatar.url(:thumb) %> <p><%= post.user.email %></p></td>
+      <td class="post-author"><%= image_tag post.user.avatar.url(:thumb) %> <p><%= link_to post.user.email, user_show_path(post.user.id) %></p></td>
       <td class="post-title"><%= post.title %></td>
       <td class="post-description"><%= post.description %></td>
       <td class="post-photo"><%= image_tag post.photo.url(:thumb) %></td>

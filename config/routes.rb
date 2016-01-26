@@ -16,14 +16,11 @@ Rails.application.routes.draw do
       get "toggle_valid"
     end
   end
-
-  resources :places
   
   resources :albums do
     match :posts, via: [:get, :patch], on: :member#get 'posts_list', :as => 'posts_list'
     #patch 'add_post'
   end
-  get 'places_search' => 'places#search', :as => 'places_search'
 
 
   get 'posts/filter/:tag_name' => 'posts#filter', as: 'filter'
