@@ -66,11 +66,10 @@ class PostsController < ApplicationController
   def destroy
     @post = Post.find(params[:id])
 
-    @post.tags.each do |tag|
-      @post.tags.delete(tag)
-      # puts Post.joins(:tags).where('tags.name' => tag[:name]).empty?
-      Tag.destroy(tag) if Post.joins(:tags).where('tags.name' => tag[:name]).empty?
-    end
+    #@post.tags.each do |tag|
+    #  @post.tags.delete(tag)
+    #  Tag.destroy(tag) if Post.joins(:tags).where('tags.name' => tag[:name]).empty?
+    #end
     @post.destroy
 
     redirect_to '/'

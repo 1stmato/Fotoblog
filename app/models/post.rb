@@ -23,4 +23,13 @@ class Post < ActiveRecord::Base
 
   validates :tags_string, presence: { message: 'must have at least one tag' }
 
+  before_destroy :remove_tags, prepend: true
+  private
+    def remove_tags
+      tags.each do |tag|
+        tags.delete(tag)
+        Tag.destroy(tag) if Post.joins(:tags).where('tags.name' => tag[:name]).empty?
+      end
+    end
+
 end
