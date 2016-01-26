@@ -26,7 +26,7 @@
       <ul class="nav navbar-nav">
 
         <li>
-          <a href="#">empty</a>
+          <%= link_to 'My albums', albums_path, class: 'navbar-brand' %>
         </li>
         <li>
           <% if user_signed_in? %>
