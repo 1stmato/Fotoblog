@@ -24,11 +24,16 @@
     <!-- Collect the nav links, forms, and other content for toggling -->
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
       <ul class="nav navbar-nav">
-
-        <li>
-          <%= link_to 'My albums', albums_path, class: 'navbar-brand' %>
-        </li>
         <% if user_signed_in? %>
+        <li>
+          <%= link_to 'Best photos', best_posts_posts_path %>
+        </li>
+        <li>
+          <%= link_to 'Newest photos', newest_posts_posts_path %>
+        </li>
+        <li>
+          <%= link_to 'My albums', albums_path %>
+        </li>
           <li>
             <%= link_to 'Edit profile', '/users/edit' %>
           </li>

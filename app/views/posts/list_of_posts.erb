@@ -1,0 +1,39 @@
+<%@tags.each do |tag| %>
+  <%= link_to tag.name, filter_path(tag.name), :class=> 'filter-by-tag'%>
+<% end %>
+
+<br/>
+<%= link_to 'Create new post', new_post_path, class: 'btn btn-success' %>
+</br>
+<div class="row">
+
+  <div class="col-lg-12">
+
+<table class="table">
+  <tr>
+    <th>Author</th>
+    <th>Title</th>
+    <th>Description</th>
+    <th>Photo</th>
+    <th>Album</th>
+    <th>Tags</th>
+  </tr>
+
+  <% @posts.each do |post| %>
+    <tr id="post-row-<%= post.id %>">
+      <td class="post-author"><%= image_tag post.user.avatar.url(:thumb) %> <p><%= link_to post.user.email, user_show_path(post.user.id) %></p></td>
+      <td class="post-title"><%= post.title %></td>
+      <td class="post-description"><%= post.description %></td>
+      <td class="post-photo"><%= image_tag post.photo.url(:thumb) %></td>
+      <td class="post-title"><%= link_to post.album.title, album_path(post.album) unless post.album.nil? %></td>
+      <td class="post-tags"><%= post.tags.map { |tag| tag.name}.join(', ') %></td>
+      <td class="post-comments"><%= post.allow_comments %></td>
+      <% if can? :update, post %><td><%= link_to 'Edit', edit_post_path(post) %></td><% end %>
+      <% if can? :delete, post %><td><%= link_to 'Delete', post_path(post),
+              method: :delete,
+              data: { confirm: 'Are you sure?' } %></td><% end %>
+      <% if can? :read, post %><td><%= link_to 'Show', post_path(post) %></td><% end %>
+    </tr>
+  <% end %>
+</table>
+</div>

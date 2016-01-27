@@ -4,6 +4,7 @@ class PostsController < ApplicationController
   
   def index
     @posts = Post.all.order('updated_at DESC')
+    @best_posts = Post.select{|post| not(post.average.nil?) }.sort_by{ |post| post.average.avg }.reverse
     # rubocop:disable Metrics/LineLength
     @tags = Tag.all.sort { |tag2, tag1| Post.joins(:tags).where('tags.name' => tag1[:name]).count <=> Post.joins(:tags).where('tags.name' => tag2[:name]).count }
     # rubocop:enable Metrics/LineLength
@@ -81,12 +82,28 @@ class PostsController < ApplicationController
     @tags = Tag.all.sort { |tag2, tag1| Post.joins(:tags).where('tags.name' => tag1[:name]).count <=> Post.joins(:tags).where('tags.name' => tag2[:name]).count }
     # rubocop:enable Metrics/LineLength
     @posts = Post.joins(:tags).where('tags.name' => params[:tag_name]).order('updated_at DESC')
-    render :index
+    render :list_of_posts
   end
   # rubocop:enable Metrics/AbcSize
 
   def show
     @post = Post.find(params[:id])
+  end
+
+  def best_posts
+    @posts = Post.select{|post| not(post.average.nil?) }.sort_by{ |post| post.average.avg }.reverse
+    # rubocop:disable Metrics/LineLength
+    @tags = Tag.all.sort { |tag2, tag1| Post.joins(:tags).where('tags.name' => tag1[:name]).count <=> Post.joins(:tags).where('tags.name' => tag2[:name]).count }
+    # rubocop:enable Metrics/LineLength
+    render :list_of_posts
+  end
+
+  def newest_posts
+    @posts = Post.all.order('updated_at DESC')
+    # rubocop:disable Metrics/LineLength
+    @tags = Tag.all.sort { |tag2, tag1| Post.joins(:tags).where('tags.name' => tag1[:name]).count <=> Post.joins(:tags).where('tags.name' => tag2[:name]).count }
+    # rubocop:enable Metrics/LineLength
+    render :list_of_posts
   end
 
   private

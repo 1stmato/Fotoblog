@@ -9,6 +9,8 @@ Rails.application.routes.draw do
   end
 
   resources :posts do
+    get 'best_posts', on: :collection
+    get 'newest_posts', on: :collection
     resources :comments do
       get "like"
       get "dislike"
