@@ -25,17 +25,14 @@ class PostsController < ApplicationController
     @post.user = current_user
     @albums = Album.all
     if @post.save
-      tags_string = (params['post']['tags_string']).to_s
-      tags = parse_tags(tags_string)
-      @post.update_attributes(tags: tags)
-      if(post_params['album_name'] == '-1')
-        @album = Album.new
-        @album.update_attributes(:title => 'Default', :description => 'Default album for unsorted photos', :user_id => current_user.id)
-        @album.save
-        @post.update_attributes(album_id: @album.id)
-      else
-        @post.update_attributes(album_id: post_params['album_name'])
-      end
+      #if(post_params['album_name'] == '-1')
+      #  @album = Album.new
+      #  @album.update_attributes(:title => 'Default', :description => 'Default album for unsorted photos', :user_id => current_user.id)
+      #  @album.save
+      #  @post.update_attributes(album_id: @album.id)
+      #else
+      #  @post.update_attributes(album_id: post_params['album_name'])
+      #end
       redirect_to '/'
     else
       render 'new'
@@ -45,17 +42,12 @@ class PostsController < ApplicationController
   # rubocop:disable Metrics/AbcSize
   def update
     @post = Post.find(params[:id])
+    @albums = Album.all
     # rubocop:disable Style/SymbolProc
     old_tags = @post.tags.map { |tag| tag.name }.join(' ')
     # rubocop:enable Style/SymbolProc
     if @post.update(post_params)
-      tags_string = (params['post']['tags_string']).to_s
-      tags = parse_tags(tags_string)
-      @post.update_attributes(tags: tags)
-      deleted_tags = old_tags.split(/[\s,]+/) - tags_string.split(/[\s,]+/)
-      updated_tags = deleted_tags | tags_string.split(/[\s,]+/) - old_tags.split(/[\s,]+/)
-      @post.touch unless updated_tags.blank?
-      deleted_tags.each { |tag| Tag.destroy_all('name' => tag) if Post.joins(:tags).where('tags.name' => tag).empty? }
+      @post.check_tags(old_tags.split(/[\s,]+/))
       @post.update_attributes(album_id: post_params['album_name'])
       redirect_to '/'
     else
@@ -66,11 +58,6 @@ class PostsController < ApplicationController
 
   def destroy
     @post = Post.find(params[:id])
-
-    #@post.tags.each do |tag|
-    #  @post.tags.delete(tag)
-    #  Tag.destroy(tag) if Post.joins(:tags).where('tags.name' => tag[:name]).empty?
-    #end
     @post.destroy
 
     redirect_to '/'
@@ -112,10 +99,10 @@ class PostsController < ApplicationController
     params.require(:post).permit(:title, :description, :photo, :tags_string, :allow_comments, :album_name)
   end
 
-  def parse_tags(tags_string)
-    tags = tags_string.split(/[\s,]+/)
-    tags.uniq.map! do |name|
-      Tag.find_or_create_by(name: name)
-    end
-  end
+  #def parse_tags(tags_string)
+  #  tags = tags_string.split(/[\s,]+/)
+  #  tags.uniq.map! do |name|
+  #    Tag.find_or_create_by(name: name)
+  # end
+  #end
 end
