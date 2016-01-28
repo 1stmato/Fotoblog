@@ -26,6 +26,8 @@ Rails.application.routes.draw do
 
 
   get 'posts/filter/:tag_name' => 'posts#filter', as: 'filter'
+
+   get 'posts/filter_best/:tag_name' => 'posts#filter_best', as: 'filter_best'
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 

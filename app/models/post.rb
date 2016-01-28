@@ -48,6 +48,14 @@ class Post < ActiveRecord::Base
       #self.update_attributes(album_id: post_params['album_name'])
   end
 
+  def rated?
+    not(self.average.nil?)
+  end
+
+  def rating
+    self.average.nil? ? 0 : self.average.avg
+  end
+
   private
 
     def remove_tags

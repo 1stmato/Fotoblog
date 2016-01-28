@@ -14,6 +14,7 @@
     <th>Title</th>
     <th>Description</th>
     <th>Photos</th>
+    <th>Average rating</th>
   </tr>
 
   <% @albums.each do |album| %>
@@ -21,6 +22,7 @@
       <td class="album-title"><%= album.title %></td>
       <td class="album-description"><%= album.description %></td>
       <td class="album-posts"><%= album.posts.size unless album.posts.nil? %></td>
+      <td class='album-rating'><%= album.rating %>
       <td><%= link_to 'Add photos', posts_album_path(album) %></td>
       <% if can? :update, album %><td><%= link_to 'Edit', edit_album_path(album) %></td><% end %>
       <% if can? :delete, album %><td><%= link_to 'Delete', album_path(album),

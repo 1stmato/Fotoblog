@@ -1,5 +1,5 @@
 <%@tags.each do |tag| %>
-  <%= link_to tag.name, filter_path(tag.name), :class=> 'filter-by-tag'%>
+  <%= link_to tag.name, action_name == 'best_posts' || action_name == 'filter_best' ? filter_best_path(tag.name) : filter_path(tag.name), :class=> 'filter-by-tag'%>
 <% end %>
 
 <br/>
