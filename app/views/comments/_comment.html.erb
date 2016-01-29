@@ -8,7 +8,7 @@
     </figure>
   </div>
   <div class="col-md-10 col-sm-10">
-    <div class="panel panel-default arrow left">
+    <div class="panel panel-default arrow left <%= get_comment_color(comment) %>">
       <div class="panel-body">
         <% if can? :manage, comment %>
 

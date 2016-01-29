@@ -9,6 +9,7 @@ class Comment < ActiveRecord::Base
     comment = Comment.find(comment_id)
     c = Comment.where(ancestry: comment.id).update_all(:validated => !comment.validated)
     comment.update_attribute(:validated, !comment.validated)
+    comment.update_attribute(:display, !comment.display)
     return c
   end
 

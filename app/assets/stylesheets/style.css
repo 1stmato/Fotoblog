@@ -176,3 +176,15 @@ footer{
     border-radius: 0.25rem;
     margin-bottom: 10px;
 }
+
+.invalid {
+    border-color: #b30000;
+}
+
+.disabled{
+    border-color: #fff544;
+}
+
+.owner{
+    border-color: #53b745;
+}

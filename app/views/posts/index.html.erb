@@ -2,14 +2,13 @@
   <div class="top_10_tags">
     <% Tag.top.limit(10).each do |tag| %>
         <%= link_to tag.name, filter_path(tag.name), :class=>"#{tag.name == @active_tag ? "active" : "not_active"}" %>
-        %>
     <% end %>
     <button type="button" class="btn btn-info" data-toggle="collapse" data-target="#tags">More tags</button>
   </div>
 
   <div class="collapse" id="tags">
     <% Tag.top.offset(10).each do |tag| %>
-        <%= link_to tag.name, filter_path(tag.name), :class=> 'not_active'%>
+        <%= link_to tag.name, filter_path(tag.name), :class=>"#{tag.name == @active_tag ? "active" : "not_active"}"%>
     <% end %>
   </div>
 </div>
