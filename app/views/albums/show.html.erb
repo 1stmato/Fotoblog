@@ -1,8 +1,15 @@
-<p>
-<%= image_tag @album.user.avatar.url(:thumb) %> <p><%= @album.user.email %></p></td>
-</p>
-<%= link_to 'My albums', albums_path, class: 'btn btn-success' %>
+<br>
+<div class="text-right">
+  <p>
+    <%= image_tag @album.user.avatar.url(:thumb) %>
 
+  <p><%= @album.user.email %></p>
+  </p>
+  <%= link_to 'My albums', albums_path, class: 'btn btn-success' %>
+</div>
+
+<br>
+<br>
 <p>
   <strong>Title:</strong>
   <%= @album.title %>
@@ -12,7 +19,7 @@
   <strong>Description:</strong>
   <%= @album.description %>
 </p>
-
+<br>
 <table class="table">
   <tr>
     <th>Title</th>
@@ -20,19 +27,25 @@
     <th>Photo</th>
     <th>Tags</th>
   </tr>
-<% @album.posts.each do |post| %>
-  <tr id="post-row-<%= post.id %>">
-    <td class="post-title"><%= post.title %></td>
-    <td class="post-description"><%= post.description %></td>
-    <td class="post-photo"><%= image_tag post.photo.url(:thumb) %></td>
-    <td class="post-tags"><%= post.tags.map { |tag| tag.name}.join(', ') %></td>
-    <% if can? :update, post %><td><%= link_to 'Edit', edit_post_path(post) %></td><% end %>
-    <% if can? :delete, post %><td><%= link_to 'Delete', post_path(post),
-              method: :delete,
-              data: { confirm: 'Are you sure?' } %></td><% end %>
-    <% if can? :read, post %><td><%= link_to 'Show', post_path(post) %></td><% end %>
-  </tr>
-<% end %> 
+  <% @album.posts.each do |post| %>
+      <tr id="post-row-<%= post.id %>">
+        <td class="post-title"><%= post.title %></td>
+        <td class="post-description"><%= post.description %></td>
+        <td class="post-photo"><%= image_tag post.photo.url(:thumb) %></td>
+        <td class="post-tags"><%= post.tags.map { |tag| tag.name }.join(', ') %></td>
+        <% if can? :update, post %>
+            <td><%= link_to 'Edit', edit_post_path(post) %></td>
+        <% end %>
+        <% if can? :delete, post %>
+            <td><%= link_to 'Delete', post_path(post),
+                            method: :delete,
+                            data: {confirm: 'Are you sure?'} %></td>
+        <% end %>
+        <% if can? :read, post %>
+            <td><%= link_to 'Show', post_path(post) %></td>
+        <% end %>
+      </tr>
+  <% end %>
 </table>
 
 

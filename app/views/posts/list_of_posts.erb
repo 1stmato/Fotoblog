@@ -1,6 +1,17 @@
-<%@tags.each do |tag| %>
-  <%= link_to tag.name, action_name == 'best_posts' || action_name == 'filter_best' ? filter_best_path(tag.name) : filter_path(tag.name), :class=> 'filter-by-tag'%>
-<% end %>
+<div>
+  <div class="top_10_tags">
+    <% Tag.top.limit(10).each do |tag| %>
+        <%= link_to tag.name, filter_path(tag.name), :class=>"#{tag.name == @active_tag ? "active" : "not_active"}" %>
+    <% end %>
+    <button type="button" class="btn btn-info" data-toggle="collapse" data-target="#tags">More tags</button>
+  </div>
+
+  <div class="collapse" id="tags">
+    <% Tag.top.offset(10).each do |tag| %>
+        <%= link_to tag.name, filter_path(tag.name), :class=>"#{tag.name == @active_tag ? "active" : "not_active"}"%>
+    <% end %>
+  </div>
+</div>
 
 <br/>
 <%= link_to 'Create new post', new_post_path, class: 'btn btn-success' %>
@@ -22,11 +33,11 @@
   <% @posts.each do |post| %>
     <tr id="post-row-<%= post.id %>">
       <td class="post-author"><%= image_tag post.user.avatar.url(:thumb) %> <p><%= link_to post.user.email, user_show_path(post.user.id) %></p></td>
-      <td class="post-title"><%= post.title %></td>
-      <td class="post-description"><%= post.description %></td>
+      <td class="post-title"><p class="picture_info"><%= post.title %></p></td>
+      <td class="post-description"><p class="picture_info"><%= post.description %></p></td>
       <td class="post-photo"><%= image_tag post.photo.url(:thumb) %></td>
       <td class="post-title"><%= link_to post.album.title, album_path(post.album) unless post.album.nil? %></td>
-      <td class="post-tags"><%= post.tags.map { |tag| tag.name}.join(', ') %></td>
+      <td class="post-tags "><p class="picture_info"><%= post.tags.map { |tag| tag.name}.join(', ') %></p></td>
       <td class="post-comments"><%= post.allow_comments %></td>
       <% if can? :update, post %><td><%= link_to 'Edit', edit_post_path(post) %></td><% end %>
       <% if can? :delete, post %><td><%= link_to 'Delete', post_path(post),
@@ -36,4 +47,5 @@
     </tr>
   <% end %>
 </table>
+</div>
 </div>

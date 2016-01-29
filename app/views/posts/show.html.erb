@@ -31,6 +31,15 @@
                     data: {confirm: 'Are you sure?'}, class: "btn btn-danger" %></td>
 <% end %>
 
+<br>
+<br>
+<p><b>Tags: </b>
+  <%@post.tags.each do |tag| %>
+      <%= link_to tag.name, filter_path(tag.name), :class=> 'filter-by-tag'%>
+  <% end %>
+</p>
+
+<% unless @post.allow_comments == "Never" %>
 <hr>
 <h3>Add a comment:</h3>
 <%= form_for([@post, @post.comments.build]) do |f| %>
@@ -47,7 +56,7 @@
 <h3>Comments</h3>
 
 
-<div class="container">
+<div class="container comment_cont">
   <div class="row">
     <div class="col-md-8">
       <section class="comment-list">
@@ -58,3 +67,4 @@
     </div>
   </div>
 </div>
+<% end %>

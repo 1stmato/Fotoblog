@@ -43,7 +43,7 @@
     <%= f.label :allow_comments %><br>
     <%= f.select(:allow_comments, options_for_select([['Always', 'Always'], ['After approval', 'Approval'], ['Not Allowed', 'Never']], :selected => @post.allow_comments), {}, {:class=>'form-control'}) %>
   </p>
- 
+
   <p>
     <%= f.submit class:"btn btn-success"%>
   </p>

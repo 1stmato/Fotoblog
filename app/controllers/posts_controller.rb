@@ -80,6 +80,7 @@ class PostsController < ApplicationController
     @tags = Tag.all.sort { |tag2, tag1| Post.joins(:tags).where('tags.name' => tag1[:name]).count <=> Post.joins(:tags).where('tags.name' => tag2[:name]).count }
     # rubocop:enable Metrics/LineLength
     @posts = Post.joins(:tags).where('tags.name' => params[:tag_name]).order('updated_at DESC')
+    @active_tag = params[:tag_name]
     render :list_of_posts
   end
   # rubocop:enable Metrics/AbcSize
