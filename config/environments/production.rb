@@ -76,4 +76,18 @@ Rails.application.configure do
 
   # Do not dump schema after migrations.
   config.active_record.dump_schema_after_migration = false
+
+  config.action_mailer.default_url_options = { :host => 'fathomless-lowlands-1815.herokuapp.com' }
+  config.action_mailer.delivery_method = :smtp
+  #config.action_mailer.smtp_settings = {:address => "localhost", :port => "1025"}
+
+  config.action_mailer.smtp_settings = {
+      :address   => "in-v3.mailjet.com",
+      :port      => 587, # ports 587 and 2525 are also supported with STARTTLS
+      :enable_starttls_auto => true, # detects and uses STARTTLS
+      :user_name => "dc8e25f39b497f21333d0737a0773c6a",
+      :password  => "4f16624940ffcbcaa8334f6be6c6dd37", # SMTP password is any valid API key
+      :authentication => 'login', # Mandrill supports 'plain' or 'login'
+      :domain => 'fathomless-lowlands-1815.herokuapp.com', # your domain to identify your server when connecting
+  }
 end
