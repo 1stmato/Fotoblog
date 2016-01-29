@@ -3,7 +3,7 @@ class AlbumsController < ApplicationController
   load_and_authorize_resource
 
   def index
-    @albums = Album.where(user_id: current_user.id).order('updated_at DESC')
+    @albums = current_user.admin? ? Album.all : Album.where(user_id: current_user.id).order('updated_at DESC')
   end
 
   def new
@@ -41,7 +41,7 @@ class AlbumsController < ApplicationController
 
   def posts
     @album = Album.find(params[:id])
-    @posts = Post.where(user_id: current_user.id).where.not(album_id: @album.id).order('updated_at DESC') if request.get?
+    @posts = Post.where(user_id: @album.user_id).where.not(album_id: @album.id).order('updated_at DESC') if request.get?
     if request.patch?
       album_params['post_ids'].select { |id| id != '-1' }.each do |post_id|
         Post.find(post_id).update_attribute('album_id', @album.id)

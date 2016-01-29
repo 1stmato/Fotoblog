@@ -17,7 +17,7 @@ class PostsController < ApplicationController
 
   def edit
     @post = Post.find(params[:id])
-    @albums = Album.where(user_id: current_user.id)
+    @albums = Album.where(user_id: @post.user_id)
   end
 
   def create
@@ -42,7 +42,7 @@ class PostsController < ApplicationController
   # rubocop:disable Metrics/AbcSize
   def update
     @post = Post.find(params[:id])
-    @albums = Album.where(user_id: current_user.id)
+    @albums = Album.where(user_id: @post.user_id)
     # rubocop:disable Style/SymbolProc
     old_tags = @post.tags.map { |tag| tag.name }.join(' ')
     # rubocop:enable Style/SymbolProc
