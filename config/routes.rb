@@ -12,10 +12,10 @@ Rails.application.routes.draw do
     get 'best_posts', on: :collection
     get 'newest_posts', on: :collection
     resources :comments do
-      get "like"
-      get "dislike"
-      get "toggle_visible"
-      get "toggle_valid"
+      patch "like"
+      patch "dislike"
+      patch "toggle_visible"
+      patch "toggle_valid"
     end
   end
   

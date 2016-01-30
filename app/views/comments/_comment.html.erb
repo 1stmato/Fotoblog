@@ -12,23 +12,33 @@
       <div class="panel-body">
         <% if can? :manage, comment %>
 
-            <% if comment.display == true %>
-                <p class="text-left"><i class="fa fa-eye"> Visible</i> <%= link_to "hide", post_path+"/comments/#{comment.id}/toggle_visible", class:"btn btn-success" %></p>
-            <% else %>
-                <p class="text-left"><i class="fa fa-eye-slash"> Not-visible</i> <%= link_to "show", post_path+"/comments/#{comment.id}/toggle_visible", class:"btn btn-success" %></p>
 
+            <% unless @post.allow_comments == "Never" %>
+                <%= form_tag(post_path+"/comments/#{comment.id}/toggle_visible", method: :patch) do %>
+                    <input type="hidden" name="hide" value="<%= comment.id %>" >
+                    <input name="authenticity_token" value="<%= form_authenticity_token %>" type="hidden">
+                    <% if comment.display == true %>
+                        <p class="text-left"><i class="fa fa-eye"> Visible</i> <%= submit_tag "Hide", class:"btn btn-success" %></p>
+                    <% else %>
+                        <p class="text-left"><i class="fa fa-eye-slash"> Visible</i> <%= submit_tag "Show", class:"btn btn-success" %></p>
+                    <% end %>
+                <% end %>
             <% end %>
 
         <% if @post.allow_comments == "Approval" %>
-            <%	if comment.validated == false %>
-                <p><i class="fa fa-gavel"></i> Not validated ! </i><%= link_to "ok", post_path+"/comments/#{comment.id}/toggle_valid", class:"btn btn-success" %></p>
-            <% end %>
+                <%= form_tag(post_path+"/comments/#{comment.id}/toggle_valid", method: :patch) do %>
+                    <input type="hidden" name="aprove" value="<%= comment.id %>" >
+                    <input name="authenticity_token" value="<%= form_authenticity_token %>" type="hidden">
+                    <%	if comment.validated == false %>
+                        <p class="text-left"><i class="fa fa-gavel"> Not validated !</i> <%= submit_tag "Ok", class:"btn btn-success" %></p>
+                    <% else %>
+                        <p class="text-left"><i class="fa fa-gavel"> Validated </i> <%= submit_tag "Undo", class:"btn btn-success" %></p>
+                    <% end %>
+                <% end %>
+        <% end %>
 
-            <%	if comment.validated == true %>
-                <p><i class="fa fa-gavel"></i> Validated </i><%= link_to "undo", post_path+"/comments/#{comment.id}/toggle_valid", class:"btn btn-success" %></p>
-            <% end %>
         <% end %>
-        <% end %>
+
         <header class="text-left">
           <div class="comment-user"><i class="fa fa-user"></i> <%= comment.user.try(:email) %> </div>
           <time class="comment-date" datetime="<%= comment.created_at %>">
@@ -36,8 +46,22 @@
         </header>
         <div class="comment-post">
           <p class="text-left">
-            <i class='fa fa-arrow-up'></i><%= link_to "(#{comment.ups})", post_path+"/comments/#{comment.id}/like"%>
-            <i class='fa fa-arrow-down'></i><%= link_to "(#{comment.downs})", post_path+"/comments/#{comment.id}/dislike"%>
+
+            <span>
+            <%= form_tag(post_path+"/comments/#{comment.id}/like", method: :patch) do %>
+                <input type="hidden" name="like" value="<%= comment.id %>" >
+                <input name="authenticity_token" value="<%= form_authenticity_token %>" type="hidden">
+                <i class='fa fa-arrow-up'></i> <%= submit_tag "("+comment.ups.to_s+")", class:"btn btn-link" %>
+            <% end %>
+            </span>
+
+            <span>
+            <%= form_tag(post_path+"/comments/#{comment.id}/dislike", method: :patch) do %>
+                <input type="hidden" name="dislike" value="<%= comment.id %>" >
+                <input name="authenticity_token" value="<%= form_authenticity_token %>" type="hidden">
+                <i class='fa fa-arrow-down'></i> <%= submit_tag "("+comment.downs.to_s+")", class:"btn btn-link" %>
+            <% end %>
+            </span>
           </p>
           <p>
             <% if comment.display == true %>

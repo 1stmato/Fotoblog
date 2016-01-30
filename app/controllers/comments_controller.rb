@@ -6,10 +6,12 @@ class CommentsController < ApplicationController
 
   def create
     @post = Post.find(params[:post_id])
-    #render plain: params.inspect
-
     setup_comment.save
-    redirect_to post_path(@post)
+    if @post.allow_comments == "Approval"
+      redirect_to post_path(@post), :flash => { :notice => "Your comment will be visible after validation !" }
+    else
+      redirect_to post_path(@post), :flash => { :notice => "Comment added" }
+    end
   end
 
   def destroy
