@@ -6,6 +6,7 @@ Rails.application.routes.draw do
 
   resources :users do
     get "show"
+    patch 'change_admin'
   end
 
   resources :posts do

@@ -22,4 +22,5 @@ class User < ActiveRecord::Base
    FROM rates r, rating_caches rc, posts p where r.rater_id = #{user_id} and r.rateable_id = rc.cacheable_id and p.id = rc.cacheable_id;"
     ActiveRecord::Base.connection.execute(q)
   end
+
 end

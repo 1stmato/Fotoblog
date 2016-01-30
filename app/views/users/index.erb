@@ -1,0 +1,27 @@
+<h3> List of users </h3>
+<div class="row">
+
+  <div class="col-lg-12">
+
+<table class="table">
+  <tr>
+    <th>Avatar</th>
+    <th>E-mail</th>
+    <th>Admin</th>
+  </tr>
+
+  <% @users.each do |user| %>
+    <tr id="user-row-<%= user.id %>">
+      <td class=""><%= image_tag user.avatar.url(:thumb) %> </td>
+      <td class="user-email"><p class="picture_info"><%= user.email %></p></td>
+      <td class="user-admin"><p class="picture_info"><%= user.admin? ? 'yes' : 'no' %></p></td>
+      <% if can? :update, user %><td><%= link_to user.admin? ? 'Change to normal user' : 'Change to admin', user_change_admin_path(user.id), :method => 'patch' %></td><% end %>
+      <% if can? :delete, user %><td><%= link_to 'Delete', user_path(user),
+              method: :delete,
+              data: { confirm: 'Are you sure?' } %></td><% end %>
+      <% if can? :read, user %><td><%= link_to 'Show', user_show_path(user) %></td><% end %>
+    </tr>
+  <% end %>
+</table>
+</div>
+</div>
