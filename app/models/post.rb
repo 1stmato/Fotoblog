@@ -1,5 +1,5 @@
 class Post < ActiveRecord::Base
-  ratyrate_rateable
+  ratyrate_rateable 'quality'
   has_and_belongs_to_many :tags
   belongs_to :user
   belongs_to :album
