@@ -77,7 +77,7 @@ Rails.application.configure do
   # Do not dump schema after migrations.
   config.active_record.dump_schema_after_migration = false
 
-  config.action_mailer.default_url_options = { :host => 'morning-anchorage-80721.herokuapp.com' }
+  config.action_mailer.default_url_options = { :host => 'foto-blog.herokuapp.com' }
   config.action_mailer.delivery_method = :smtp
   #config.action_mailer.smtp_settings = {:address => "localhost", :port => "1025"}
 
@@ -88,7 +88,7 @@ Rails.application.configure do
       :user_name => ENV['MJ_USER_NAME'],
       :password  => ENV['MJ_PASSWORD'], # SMTP password is any valid API key
       :authentication => 'login', # Mandrill supports 'plain' or 'login'
-      :domain => 'morning-anchorage-80721.herokuapp.com', # your domain to identify your server when connecting
+      :domain => 'foto-blog.herokuapp.com', # your domain to identify your server when connecting
   }
 
   config.paperclip_defaults = {
