@@ -28,7 +28,7 @@ class Post < ActiveRecord::Base
   before_destroy :remove_tags, prepend: true
   def check_tags(old_tags)
       parse_tags
-
+      self.touch
       deleted_tags = old_tags - tags_string.split(/[\s,]+/)
       puts 'Deleted tags: ' + deleted_tags.to_s
       deleted_tags.each { |tag| Tag.destroy_all('name' => tag) if Post.joins(:tags).where('tags.name' => tag).empty? }
