@@ -12,6 +12,7 @@
 //
 //= require jquery
 //= require jquery.raty
+//= require turbolinks
 //= require ratyrate
 //= require jquery_ujs
 //= require bootstrap.min
