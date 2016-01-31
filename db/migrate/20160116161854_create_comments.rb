@@ -8,7 +8,7 @@ class CreateComments < ActiveRecord::Migration
       t.integer :dislikes, :null => false
       t.references :post, index: true, foreign_key: true
       t.references :user, index: true, foreign_key: true
-      t.references :Comment, index: true, foreign_key: true
+      t.references :comment, index: true, foreign_key: true
 
       t.timestamps null: false
     end
