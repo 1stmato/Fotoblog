@@ -6,16 +6,16 @@ Devise.setup do |config|
   # confirmation, reset password and unlock tokens in the database.
   # Devise will use the `secret_key_base` on Rails 4+ applications as its `secret_key`
   # by default. You can change it below and use your own secret key.
-  # config.secret_key = 'efddde998a85c9201953cd86128db432aeb98df1f9c2688645ebaa84bac3a3d4a0ccfa95ace5c924c54cf4194a867161fcdaa17da32d60c31c3fed1354b3c56b'
+  # config.secret_key = '89c833f6f4185ab7c8972eacbd74d1d67282f767aa532e8b9c455a971b00e81d59d42c62504232fb7b3b9be2bbb7b46c8bda30b5c333d6817f654aaed97fec53'
 
   # ==> Mailer Configuration
   # Configure the e-mail address which will be shown in Devise::Mailer,
   # note that it will be overwritten if you use your own mailer class
   # with default "from" parameter.
-  config.mailer_sender = 'please-change-me-at-config-initializers-devise@example.com'
+  config.mailer_sender = 'michal.masir@gmail.com'
 
   # Configure the class responsible to send e-mails.
-  # config.mailer = 'Devise::Mailer'
+  config.mailer = 'Devise::Mailer'
 
   # ==> ORM configuration
   # Load and configure the ORM. Supports :active_record (default) and
@@ -99,7 +99,7 @@ Devise.setup do |config|
   config.stretches = Rails.env.test? ? 1 : 10
 
   # Setup a pepper to generate the encrypted password.
-  # config.pepper = '354d6492b0ece21a1a8fa224b84a76589d4a9df946605e94b0a5afe98e133bd3aea062d319dc5bc6848228c05e676ebe56f09de279600f47a29b68293e93e2ca'
+  # config.pepper = '8cf751ca4f67a49e22e27483d27f4962568a8c94028de70302972a5dda7a258c67a74763c195d68f5b3e5eb93c324ff0b4b078705d4e53f7151d3d166f0fff49'
 
   # ==> Configuration for :confirmable
   # A period that the user is allowed to access the website even without
@@ -121,7 +121,7 @@ Devise.setup do |config|
   # initial account confirmation) to be applied. Requires additional unconfirmed_email
   # db field (see migrations). Until confirmed, new email is stored in
   # unconfirmed_email column, and copied to email column on successful confirmation.
-  config.reconfirmable = true
+  config.reconfirmable = false
 
   # Defines which key will be used when confirming an account
   # config.confirmation_keys = [:email]
@@ -208,7 +208,7 @@ Devise.setup do |config|
   # Turn scoped views on. Before rendering "sessions/new", it will first check for
   # "users/sessions/new". It's turned off by default because it's slower if you
   # are using only default views.
-  # config.scoped_views = false
+  config.scoped_views = true
 
   # Configure the default scope given to Warden. By default it's the first
   # devise role declared in your routes (usually :user).
