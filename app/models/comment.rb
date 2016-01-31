@@ -2,7 +2,7 @@ class Comment < ActiveRecord::Base
   has_ancestry
   belongs_to :post
   belongs_to :user
-  belongs_to :Comment
+  belongs_to :comment
   has_many :likes, dependent: :destroy
 
   def self.toggle_valid_with_children(comment_id)
