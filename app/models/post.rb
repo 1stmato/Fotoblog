@@ -11,7 +11,7 @@ class Post < ActiveRecord::Base
   validates :title, :description, :allow_comments, :album_name, presence: true
 
   # rubocop:disable Metrics/LineLength
-  has_attached_file :photo, styles: { :medium: '800x600>', :thumb: '100x100>' #},
+  has_attached_file :photo, styles: { :medium: '800x600>', :thumb: '100x100>', #},
    :default_url: '/images/:style/missing.png',
    :url  => ':s3_domain_url',
     :path => 'public/avatars/:id/:style_:basename.:extension',
