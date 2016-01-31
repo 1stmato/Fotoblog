@@ -3,7 +3,7 @@ class Comment < ActiveRecord::Base
   belongs_to :post
   belongs_to :user
   belongs_to :Comment
-  has_many :likes
+  has_many :likes, dependent: :destroy
 
   def self.toggle_valid_with_children(comment_id)
     comment = Comment.find(comment_id)
