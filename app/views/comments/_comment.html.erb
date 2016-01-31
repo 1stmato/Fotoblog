@@ -47,21 +47,21 @@
         <div class="comment-post">
           <p class="text-left">
 
-            <span>
-            <%= form_tag(post_path+"/comments/#{comment.id}/like", method: :patch) do %>
+            <div class="row">
+              <div class="col-md-8 col-sm-8">
+            <%= form_tag(post_path+"/comments/#{comment.id}/like", method: :patch, :class => 'col-md-3 col-sm-3') do %>
                 <input type="hidden" name="like" value="<%= comment.id %>" >
                 <input name="authenticity_token" value="<%= form_authenticity_token %>" type="hidden">
-                <i class='fa fa-arrow-up'></i> <%= submit_tag "("+comment.ups.to_s+")", class:"btn btn-link" %>
+                <i class='fa fa-arrow-up'></i><%= submit_tag "("+comment.ups.to_s+")", class:"btn btn-link" %>
             <% end %>
-            </span>
 
-            <span>
-            <%= form_tag(post_path+"/comments/#{comment.id}/dislike", method: :patch) do %>
+            <%= form_tag(post_path+"/comments/#{comment.id}/dislike", method: :patch, :class => 'col-md-3 col-sm-3') do %>
                 <input type="hidden" name="dislike" value="<%= comment.id %>" >
                 <input name="authenticity_token" value="<%= form_authenticity_token %>" type="hidden">
-                <i class='fa fa-arrow-down'></i> <%= submit_tag "("+comment.downs.to_s+")", class:"btn btn-link" %>
+                <i class='fa fa-arrow-down'></i><%= submit_tag "("+comment.downs.to_s+")", class:"btn btn-link" %>
             <% end %>
-            </span>
+                  </div>
+            </div>
           </p>
           <p>
             <% if comment.display == true %>

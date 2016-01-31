@@ -188,3 +188,7 @@ footer{
 .owner{
     border-color: #53b745;
 }
+
+.thumbnail{
+    height: 200px;
+}
