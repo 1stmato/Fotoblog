@@ -49,11 +49,11 @@ class Post < ActiveRecord::Base
   end
 
   def rated?
-    not(self.average.nil?)
+    not(self.average('quality').nil?)
   end
 
   def rating
-    self.average.nil? ? 0 : self.average.avg
+    self.average('quality').nil? ? 0 : self.average('quality').avg
   end
 
   private
