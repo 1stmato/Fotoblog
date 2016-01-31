@@ -11,17 +11,7 @@ class Post < ActiveRecord::Base
   validates :title, :description, :allow_comments, :album_name, presence: true
 
   # rubocop:disable Metrics/LineLength
-  has_attached_file :photo, styles: { :medium: '800x600>', :thumb: '100x100>', #},
-   :default_url: '/images/:style/missing.png',
-   :url  => ':s3_domain_url',
-    :path => 'public/avatars/:id/:style_:basename.:extension',
-    :storage => :fog,
-    :fog_credentials => {
-        provider: 'AWS',
-        aws_access_key_id: 'AKIAI7AOEQEF2I75QJGA',
-        aws_secret_access_key: '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'
-    },
-    fog_directory: 'fotoblog'
+  has_attached_file :photo, styles: { medium: '800x600>', thumb: '100x100>' }, default_url: '/images/:style/missing.png'
   # rubocop:enable Metrics/LineLength
 
 
