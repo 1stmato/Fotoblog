@@ -27,25 +27,11 @@ class Post < ActiveRecord::Base
   #before_update :check_tags, prepend: true
   before_destroy :remove_tags, prepend: true
   def check_tags(old_tags)
-      # rubocop:disable Style/SymbolProc
-      #self.tags.each {|tag| puts tag.name}
-      #old_tags = self.tags.dup
-      #self.tags.each { |tag| old_tags.append(tag.name) }#.join(' ')
-      # rubocop:enable Style/SymbolProc
-      #old_tags.each {|tag| puts tag.name}
       parse_tags
 
       deleted_tags = old_tags - tags_string.split(/[\s,]+/)
-      #updated_tags = deleted_tags | tags_string.split(/[\s,]+/) - old_tags
-      #self.touch unless updated_tags.blank?
       puts 'Deleted tags: ' + deleted_tags.to_s
-
-      #self.tags.each {|tag| puts tag.name}
-      #updated_tags = deleted_tags | self.tags - old_tags
-      #parse_tags
-      #self.touch unless updated_tags.blank?
       deleted_tags.each { |tag| Tag.destroy_all('name' => tag) if Post.joins(:tags).where('tags.name' => tag).empty? }
-      #self.update_attributes(album_id: post_params['album_name'])
   end
 
   def rated?
@@ -70,7 +56,6 @@ class Post < ActiveRecord::Base
       tag_strings.each {|tag| puts tag}
       self.tags = []
       tag_strings.uniq.each { |name| self.tags.append(Tag.find_or_create_by(name: name)) }
-      #self.tags = tag_strings
     end
 
     def parse_album

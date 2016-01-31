@@ -25,14 +25,6 @@ class PostsController < ApplicationController
     @post.user = current_user
     @albums = Album.where(user_id: current_user.id)
     if @post.save
-      #if(post_params['album_name'] == '-1')
-      #  @album = Album.new
-      #  @album.update_attributes(:title => 'Default', :description => 'Default album for unsorted photos', :user_id => current_user.id)
-      #  @album.save
-      #  @post.update_attributes(album_id: @album.id)
-      #else
-      #  @post.update_attributes(album_id: post_params['album_name'])
-      #end
       redirect_to '/'
     else
       render 'new'
@@ -111,11 +103,4 @@ class PostsController < ApplicationController
   def post_params
     params.require(:post).permit(:title, :description, :photo, :tags_string, :allow_comments, :album_name)
   end
-
-  #def parse_tags(tags_string)
-  #  tags = tags_string.split(/[\s,]+/)
-  #  tags.uniq.map! do |name|
-  #    Tag.find_or_create_by(name: name)
-  # end
-  #end
 end
