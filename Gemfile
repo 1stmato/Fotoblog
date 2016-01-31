@@ -33,6 +33,9 @@ gem 'cancancan', '~> 1.10'
 gem 'ratyrate'
 
 gem 'foursquare2'
+
+gem 'aws-sdk', '~> 1.36.1'
+gem 'fog'
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
 
@@ -61,4 +64,4 @@ group :production do
   gem 'rails_12factor'
 end
 
-ruby "2.2.0"
+ruby '2.2.1'
